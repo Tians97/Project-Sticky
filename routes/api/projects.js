@@ -1,10 +1,3 @@
-// const express = require('express')
-// const {
-//     createProject
-// } = require('../../controllers/projectController')
-// const router = express.Router()
-
-
 const express = require('express');
 const { mongoose } = require('mongoose');
 const Project = mongoose.model("Project");
@@ -35,8 +28,6 @@ router.get('/:id', async (req, res) => {
         .catch(err => res.status(404).json({ err }))
 })
 
-
-
 //create a new project
 router.post('/', validateProjectInput, async (req, res, next) => {
     try {
@@ -48,7 +39,7 @@ router.post('/', validateProjectInput, async (req, res, next) => {
             members: req.body.members,
             tasks: req.body.tasks
         })
-        
+
         let project = await newProject.save();
         return res.json(project);
     }
@@ -66,11 +57,25 @@ router.delete('/:id', async (req, res) => {
     catch (err) {
         res.status(404).json({ noprojectfound: "No projct found with that ID" })
     }
-
 })
 
-
-
 //update a project
+router.patch('/:id', validateProjectInput, async (req, res) => {
+    const { id } = req.params
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: "Invalid Id" })
+    }
+
+    const project = await Project.findOneAndUpdate({ _id: id }, {
+        ...req.body
+    }, { returnDocument: "after" })
+
+    if (!project) {
+        return res.status(400).json({ error: "Failed to update, project does not exist" })
+    }
+
+    res.status(200).json(project)
+})
 
 module.exports = router;
