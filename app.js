@@ -54,7 +54,7 @@ app.use('/api/projects', projectRouter );
 app.use('/api/tasks', taskRouter);
 
 app.use((req, res, next) => {
-  const err = new Error('Not Found');
+  const err = new Error('Path Not Found');
   err.statusCode = 404;
   next(err);
 });
