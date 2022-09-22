@@ -56,7 +56,7 @@ router.delete('/:id', async (req, res) => {
         return res.json(task)
     }
     catch (err) {
-        res.status(404).json({ noprojectfound: "No project found with that ID" })
+        res.status(404).json({ notaskfound: "No task found with that ID" })
     }
 })
 

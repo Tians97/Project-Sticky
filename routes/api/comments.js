@@ -9,6 +9,7 @@ router.get("/task/:taskId", async (req, res, next) => {
     try {
         const comments = await Comment
             .find({ task: req.params.taskId })
+            console.log("debug   aaaa", comments)
         return res.json(comments);
     }
     catch (_err) {
@@ -32,6 +33,38 @@ router.post('/', validateCommentInput, async (req, res, next) => {
     catch (err) {
         next(err)
     }
+})
+
+// delete a comment
+router.delete('/:id', async (req, res) => {
+    try {
+        const comment = await Comment.findByIdAndDelete(req.params.id);
+        return res.json(comment)
+    }
+    catch (err) {
+        res.status(404).json({ nocommentfound: "No comment found with that ID" })
+    }
+
+})
+
+
+// update a comment
+router.patch('/:id', validateCommentInput, async (req, res) => {
+    const { id } = req.params
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({ error: "Invalid Id" })
+    }
+
+    const comment = await Comment.findOneAndUpdate({ _id: id }, {
+        ...req.body
+    }, { returnDocument: "after" })
+
+    if (!comment) {
+        return res.status(400).json({ error: "Failed to update, comment does not exist" })
+    }
+
+    res.status(200).json(comment)
 })
 
 
