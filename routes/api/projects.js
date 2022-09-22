@@ -28,6 +28,12 @@ router.get("/user/:userId", async (req, res, next) => {
 })
 
 //get a single project
+router.get('/:id', async (req, res) => {
+    Project.findById(req.params.id)
+        .then(project => res.json(project))
+        .catch(err => res.status(404).json({ err }))
+})
+
 
 
 //create a new project
