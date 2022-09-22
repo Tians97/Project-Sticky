@@ -4,7 +4,7 @@ const Task = mongoose.model("Task");
 const router = express.Router();
 const validateTaskInput = require('../../validation/task');
 
-// get all tasks for a user by userId
+// get all tasks for a project by projectId
 router.get("/project/:projectId", async (req, res, next) => {
     try {
         const tasks = await Task
