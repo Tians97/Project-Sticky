@@ -5,8 +5,9 @@ const { validationResult } = require("express-validator");
 // middleware to format the validation errors (to customize, see
 // express-validator's documentation)
 const handleValidationErrors = (req, _res, next) => {
-  const validationErrors = validationResult(req);
 
+  const validationErrors = validationResult(req);
+  
   if (!validationErrors.isEmpty()) {
     const errorFormatter = ({ msg }) => msg;
     const errors = validationErrors.formatWith(errorFormatter).mapped();

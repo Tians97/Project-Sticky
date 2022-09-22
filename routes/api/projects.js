@@ -5,10 +5,11 @@
 // const router = express.Router()
 
 
-const express = require('express')
-const { mongoose } = require('mongoose')
-const Project = mongoose.model("Project")
-const router = express.Router()
+const express = require('express');
+const { mongoose } = require('mongoose');
+const Project = mongoose.model("Project");
+const router = express.Router();
+const validateProjectInput = require('../../validation/project');
 
 //get all projects for a user by userId
 router.get("/user/:userId", async (req, res, next) => {
@@ -21,9 +22,9 @@ router.get("/user/:userId", async (req, res, next) => {
         return res.json(projects)
     }
     catch (_err) {
-        const err = new Error(_err.message)
+        const err = new Error(_err.message);
         err.statusCode = 404;
-        return next(err)
+        return next(err);
     }
 })
 
@@ -37,7 +38,24 @@ router.get('/:id', async (req, res) => {
 
 
 //create a new project
-// router.post('/', createProject)
+router.post('/', validateProjectInput, async (req, res, next) => {
+    try {
+        const newProject = new Project({
+            creator: req.body.creator,
+            title: req.body.title,
+            description: req.body.description,
+            deadline: req.body.deadline,
+            members: req.body.members,
+            tasks: req.body.tasks
+        })
+        
+        let project = await newProject.save();
+        return res.json(project);
+    }
+    catch (err) {
+        next(err);
+    }
+})
 
 
 
@@ -47,4 +65,4 @@ router.get('/:id', async (req, res) => {
 
 //update a project
 
-module.exports = router
+module.exports = router;
