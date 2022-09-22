@@ -57,9 +57,17 @@ router.post('/', validateProjectInput, async (req, res, next) => {
     }
 })
 
+// delete a project
+router.delete('/:id', async (req, res) => {
+    try {
+        const project = await Project.findByIdAndDelete(req.params.id);
+        return res.json(project)
+    }
+    catch (err) {
+        res.status(404).json({ noprojectfound: "No projct found with that ID" })
+    }
 
-
-//delete a project
+})
 
 
 
