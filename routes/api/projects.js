@@ -4,7 +4,7 @@ const Project = mongoose.model("Project");
 const router = express.Router();
 const validateProjectInput = require('../../validation/project');
 
-//get all projects for a user by userId
+// get all projects for a user by userId
 router.get("/user/:userId", async (req, res, next) => {
     try {
         const projects = await Project
@@ -21,14 +21,14 @@ router.get("/user/:userId", async (req, res, next) => {
     }
 })
 
-//get a single project
+// get a single project
 router.get('/:id', async (req, res) => {
     Project.findById(req.params.id)
         .then(project => res.json(project))
         .catch(err => res.status(404).json({ err }))
 })
 
-//create a new project
+// create a new project
 router.post('/', validateProjectInput, async (req, res, next) => {
     try {
         const newProject = new Project({
@@ -59,7 +59,7 @@ router.delete('/:id', async (req, res) => {
     }
 })
 
-//update a project
+// update a project
 router.patch('/:id', validateProjectInput, async (req, res) => {
     const { id } = req.params
 
