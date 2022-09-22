@@ -5,7 +5,8 @@ const projectSchema = new Schema(
     {
         creator: {
             type: Schema.Types.ObjectId,
-            ref: "User"
+            ref: "User",
+            required: true
         },
         title: {
             type: String,
@@ -16,7 +17,7 @@ const projectSchema = new Schema(
         },
         deadline: {
             type: Date,
-            require: [true, 'Please add a deadline']
+            // require: [true, 'Please add a deadline']
         },
         members: [
             {
@@ -35,7 +36,5 @@ const projectSchema = new Schema(
         timestamps: true
     }
 )
-
-projectSchema.index({ name: 1, title: 1 }) //mongoose 
 
 module.export = mongoose.model("Project", projectSchema);

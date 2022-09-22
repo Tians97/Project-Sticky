@@ -3,6 +3,14 @@ const Schema = mongoose.Schema;
 
 const taskSchema = new Schema(
     {
+        creator: {
+            type: Schema.Types.ObjectId,
+            ref: "User"
+        },
+        project: {
+            type: Schema.Types.ObjectId,
+            ref: "Project"
+        },
         title: {
             type: String,
             require: [true, 'Please add a title']
