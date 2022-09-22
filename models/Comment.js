@@ -6,13 +6,13 @@ const commentSchema = new Schema(
         body: {
             type: Text,
         },
-        userId: {
-            type: String,
-            required: true
+        creator: {
+            type: Schema.Types.ObjectId,
+            ref: "User"
         },
-        taskId: {
-            type: String,
-            required: true
+        task: {
+            type: Schema.Types.ObjectId,
+            ref: "Task"
         }
     },
     {
