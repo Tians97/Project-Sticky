@@ -5,26 +5,21 @@ const taskSchema = new Schema(
     {
         creator: {
             type: Schema.Types.ObjectId,
-            ref: "User"
+            ref: "User",
+            required: true
         },
         project: {
             type: Schema.Types.ObjectId,
-            ref: "Project"
+            ref: "Project",
+            required: true
         },
         title: {
             type: String,
             require: [true, 'Please add a title']
         },
-        body: {
+        description: {
             type: String,
-        },
-        userId: {
-            type: String,
-            required: true
-        },
-        projectId: {
-            type: String,
-            required: true
+            require: [true, 'Please add a description']
         },
         deadline: {
             type: Date,
