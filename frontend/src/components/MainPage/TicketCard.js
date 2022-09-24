@@ -3,7 +3,6 @@ import "./TicketCard.css";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
 import { Button } from "@mui/material";
-import PushPinIcon from "@mui/icons-material/PushPin";
 import { CircularProgress, CircularProgressLabel } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -15,6 +14,10 @@ import {
 } from "../../store/projects";
 import { useEffect, useState } from "react";
 import { useTransition, animated } from "react-spring";
+
+
+
+
 
 const TicketCard = () => {
   const dispatch = useDispatch();
@@ -34,11 +37,6 @@ const TicketCard = () => {
     leave: { x:100, y:800, opacity: 0 },  
   });
 
-  const calc = (x, y, rect) => [
-    -(y - rect.top - rect.height / 2) / 5,
-    (x - rect.left - rect.width / 2) / 5,
-    1.4
-  ];
 
   ////react spring
 
