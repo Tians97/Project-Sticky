@@ -9,6 +9,15 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import { fetchUserTasks, selectUserTasks, updateTask } from '../../store/tasks';
 import { deleteTask } from '../../store/tasks';
+import Checkbox from '@mui/material/Checkbox';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+
 
 
 const Tasks = ({ id, title, description, deadline }) => {
@@ -34,36 +43,46 @@ const Tasks = ({ id, title, description, deadline }) => {
         <div className='main-container'>
             <SideBar />
             <div className='task-container'>
-                {tasks.map((task, i) => {
-                    return (
-                        <Card className='task-top' key={i}>
-                            <CardActionArea>
-                                <CardContent>
-                                    <div className='top-left'>
-                                        <Typography gutterBottom variant='h5' component='div'>
-                                            Task: {task.title}
-                                        </Typography>
-                                        <Typography className='top-text' variant="body2" color="text.secondary" component="span">
-                                            Details: {task.description}
-                                        </Typography>
-                                        <Typography>{task.comments.map((comment) => comment.body)}</Typography>
-                                    </div>
-                                    <div className='top-right'>
-                                        <div>
-                                            <input type="checkbox" defaultChecked={task.completed} id={`checkbox_${task._id}`} onChange={() => handleTaskCheckboxClick(task)} />
-                                        </div>
+                <TableContainer component={Paper}>
+                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell align="center"> Project </TableCell>
+                                <TableCell align="center">task</TableCell>
+                                <TableCell align="center">Description</TableCell>
+                                <TableCell align="center">Deadline</TableCell>
+                                <TableCell align="center">Completed</TableCell>
+                                <TableCell align="center">Action</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {tasks.map((task) => (
+                                <TableRow
+                                    key={task.title}
+                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                > 
+                                    <TableCell align="center">
+                                        {task.project.title}
+                                    </TableCell>
+                                    <TableCell align="center">{task.title}</TableCell>
+                                    <TableCell align="center">{task.description}</TableCell>
+                                    <TableCell align="center">{task.deadline}</TableCell>
+                                    <TableCell align='center'>
+                                        <Checkbox checked={task.completed} id={`checkbox_${task._id}`} onChange={() => handleTaskCheckboxClick(task)} color="success" />
+                                    </TableCell>
+                                    <TableCell align='center'>
                                         <Button onClick={() => history.push(`/projects/${task.project}/${task._id}`)}>
                                             <EditIcon />
                                         </Button>
                                         <Button onClick={() => dispatch(deleteTask(task._id))}>
                                             <DeleteForeverIcon />
                                         </Button>
-                                    </div>
-                                </CardContent>
-                            </CardActionArea>
-                        </Card>
-                    )
-                })}
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
             </div>
         </div>
     )

@@ -12,6 +12,7 @@ router.get("/project/:projectId", async (req, res, next) => {
         const tasks = await Task
             .find({ project: req.params.projectId })
             .populate("creator")
+            .populate("project")
             // .populate("comments")
             .sort({ priority: -1 })
         return res.json(tasks)
@@ -29,6 +30,7 @@ router.get("/user/:userId", async (req, res, next) => {
         const tasks = await Task
             .find({ creator: req.params.userId })
             .populate("creator")
+            .populate("project")
             // .populate("comments")
             .sort({ priority: -1 })
         return res.json(tasks)
