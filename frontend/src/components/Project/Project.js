@@ -99,7 +99,7 @@ const Project = () => {
    })
 
    function percentage(){
-    return complete/total * 100
+    return Math.floor(complete/total * 100)
    }
 
 
